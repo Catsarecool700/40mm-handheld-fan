@@ -1,0 +1,8 @@
+1.intake pwm
+2.intake tacho
+3.exhaust pwm
+4.exhaust tacho
+5.SCL
+6.SDA
+9.Y(up/down)
+10.X(left/right
