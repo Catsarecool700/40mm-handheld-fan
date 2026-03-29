@@ -2,14 +2,20 @@ Measuring only 40x63x68 its a tiny little pain in the ass to solder and put toge
 
 The code is a mess but functions and the cad is final 
 
-- Parts required 
-  - Esp32 s3 supermini
+- Electronics required 
+  - Esp32 s3 super mini
   - Mini360 or similar buck converter
   - 128x32 0.92" i2c oled
   - PSP 1000 joystick (the one with pads on the bottom)
   - USBc Trigger board eiter adjustable or set to 12v
   - Delta [GFC0412D](https://www.delta-fan.com/Download/Spec/GFC0412DS-SM06B0G.pdf) 
   - A diode may be needed if your buck converter lacks one to prevent voltage backflow when programing the esp32
+- Hardware required
+  - M2x3x3.2 heatset insert X4
+  - M2x8 cap head bolt X2
+  - M2x3 button head bolt X2
+  - M3x25 cap head bolt X4
+  - Hot glue gun
 
 
 <img src="Images/working.jpg" height="600"/> <img src="Images/approximate size.jpg" height="600"/>
