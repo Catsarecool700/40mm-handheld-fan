@@ -24,7 +24,8 @@ const unsigned long TACH_SAMPLE_TIME = 500;  // Sample period in milliseconds
 const unsigned long TACH_SAMPLE_TIME2 = 500;
 int rpm = 0;
 int rpm2 = 0;
-int fanspeed = 0;
+int pwmValue = 0;
+int fanspeedPercent = 0;
 unsigned long temp_celsius = 0;
 void IRAM_ATTR tachISR() {
   tachPulseCount = tachPulseCount + 1;
@@ -49,7 +50,7 @@ void setup() {
   ledcAttach(PWM_PIN2, PWM_FREQ, PWM_RESOLUTION);
   pinMode(TACH_PIN, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(TACH_PIN), tachISR, FALLING);
-    pinMode(TACH_PIN2, INPUT_PULLUP);
+  pinMode(TACH_PIN2, INPUT_PULLUP);
   attachInterrupt(digitalPinToInterrupt(TACH_PIN2), tachISR2, FALLING);
   ledcWrite(PWM_PIN, 0);
   ledcWrite(PWM_PIN2, 0);
@@ -62,9 +63,9 @@ void loop() {
   oled();
   pwm();
   temp_celsius = temperatureRead();
-  ledcWrite(PWM_PIN, fanspeed);
-  ledcWrite(PWM_PIN2, fanspeed);
-  int speedPercent = map(fanspeed, 0, 255, 0, 100);
+  pwmValue = map(fanspeedPercent, 0, 100, 0, 255);
+  ledcWrite(PWM_PIN, pwmValue);
+  ledcWrite(PWM_PIN2, pwmValue);
   valueX = analogRead(VRX_PIN);
   valueY = analogRead(VRY_PIN);
 }
@@ -87,16 +88,35 @@ void tacho(){
 
 void pwm(){
   if (valueX >= 2200){
-    Serial.print(fanspeed);
-    fanspeed = fanspeed + 5;
-    fanspeed = constrain(fanspeed, 0, 255);
+    fanspeedPercent = fanspeedPercent + 5;
+    fanspeedPercent = constrain(fanspeedPercent, 0, 100);
+    Serial.print("Fan Speed: ");
+    Serial.print(fanspeedPercent);
+    Serial.println("%");
     delay(100);
   }
-
   if (valueX <= 1000){
-    Serial.print(fanspeed);
-    fanspeed = fanspeed - 5;
-    fanspeed = constrain(fanspeed, 0, 255);
+    fanspeedPercent = fanspeedPercent - 5;
+    fanspeedPercent = constrain(fanspeedPercent, 0, 100);
+    Serial.print("Fan Speed: ");
+    Serial.print(fanspeedPercent);
+    Serial.println("%");
+    delay(100);
+  }
+  if (valueY >= 2400){
+    fanspeedPercent = fanspeedPercent - 1;
+    fanspeedPercent = constrain(fanspeedPercent, 0, 100);
+    Serial.print("Fan Speed: ");
+    Serial.print(fanspeedPercent);
+    Serial.println("%");
+    delay(100);
+  }
+  if (valueY <= 800){
+    fanspeedPercent = fanspeedPercent + 1;
+    fanspeedPercent = constrain(fanspeedPercent, 0, 100);
+    Serial.print("Fan Speed: ");
+    Serial.print(fanspeedPercent);
+    Serial.println("%");
     delay(100);
   }
 }
@@ -122,8 +142,12 @@ void oled(){
   display.println(" RPM-E");
 
   display.setCursor(0, 20);
-  display.print(fanspeed);
-  display.println(" Pwm");
+  display.print(fanspeedPercent);
+  display.println("%");
+
+  display.setCursor(30, 20);
+  display.print(pwmValue);
+  display.println("PWM");
 
   display.setCursor(70, 20);
   display.print("Temp ");
