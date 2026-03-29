@@ -1,6 +1,6 @@
 Measuring only 40x63x68 its a tiny little pain in the ass to solder and put together, mostly because of the 20 tiny fiddly wires that go everywhere but its really cute and loud so thats all that matters
 
-The code is a mess but functions and the cad is final 
+The code is a mess but functions and the cad is (probably) final 
 
 - Electronics required 
   - Esp32 s3 super mini
