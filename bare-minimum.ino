@@ -62,6 +62,8 @@ void setup() {
 }
 
 void loop() {
+  valueX = analogRead(VRX_PIN);
+  valueY = analogRead(VRY_PIN);
   tacho();
   oled();
   pwm();
@@ -69,8 +71,6 @@ void loop() {
   pwmValue = map(fanspeedPercent, 0, 100, 16, 255);
   ledcWrite(PWM_PIN, pwmValue);
   ledcWrite(PWM_PIN2, pwmValue);
-  valueX = analogRead(VRX_PIN);
-  valueY = analogRead(VRY_PIN);
 }
 void tacho(){
     // Calculate RPM every second
