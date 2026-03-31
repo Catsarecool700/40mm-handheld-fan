@@ -6,8 +6,8 @@
 #include <Adafruit_SSD1306.h>
 #define I2C_SCL 5
 #define I2C_SDA 6
-#define VRY_PIN  9 // ESP32 pin GPIO36 (ADC0) connected to VRY pin
-#define VRX_PIN  10 // ESP32 pin GPIO39 (ADC3) connected to VRX pin
+#define VRY_PIN  9 
+#define VRX_PIN  10 
 #define SCREEN_WIDTH 128 // display width,  in pixels
 #define SCREEN_HEIGHT 32 // display height, in pixels
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, -1);
